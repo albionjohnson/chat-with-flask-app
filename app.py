@@ -1,11 +1,12 @@
 from flask import Flask, render_template
-import socketio
+from flask_socketio import SocketIO, join_room, leave_room, emit
+
 messages = []
 
-sio = socketio.Server(logger=True, async_mode=None)
+# sio = socketio.Server(logger=True, async_mode=None)
 app = Flask(__name__)
-app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
-
+# app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+sio = SocketIO(app, manage_session=False)
 
 @app.route('/')
 def hello_world():  # put application's code here
