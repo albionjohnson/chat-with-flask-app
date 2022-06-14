@@ -28,7 +28,7 @@
 
     import {io} from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
-    const socket = io("https://chat-with-flask-app.herokuapp.com");
+    const socket = io("http://127.0.0.1:5000");
 
     form.addEventListener('submit', (e) => {
         e.preventDefault()
