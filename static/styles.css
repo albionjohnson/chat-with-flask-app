@@ -1,0 +1,20 @@
+form {
+  width: 300px;
+  margin: auto;
+}
+
+.chat {
+  height: 70vh;
+  width: 280px;
+  margin: auto;
+  overflow-y: scroll;
+}
+
+#output {
+  width: 150px;
+  margin-top: 5px;
+  word-break: break-all;
+  border-radius: 4px;
+  background-color: #22c55e;
+  padding: 10px;
+}

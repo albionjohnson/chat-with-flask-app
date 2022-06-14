@@ -1,0 +1,63 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+<div>
+    <div class="chat">
+        <p id="output"></p>
+    </div>
+    <form id="form">
+        <input type="text" id="text" placeholder="Enter text" autocomplete="off">
+        <button id="button">Send</button>
+    </form>
+</div>
+<script type="module">
+    const form = document.getElementById("form");
+    const text = document.getElementById("text");
+    const output = document.getElementById("output");
+    const chat = document.querySelector(".chat");
+    chat.innerHTML = ''
+    let messages = []
+
+    import {io} from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+
+    const socket = io("http://127.0.0.1:5000");
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        sendMsg(e)
+    })
+
+    function sendMsg(e) {
+        socket.emit("message", e.target[0]?.value);
+        text.value = ''
+    }
+
+    socket.on('reply', (reply) => {
+        messages = reply
+        chat.innerHTML = ''
+        messages.forEach(item => {
+            const para = document.createElement("p")
+            para.id = "output"
+            para.innerText = item?.message + ' ' + item?.id
+            if (para.innerText?.includes(socket.id) === true) {
+                para.style.float = 'right';
+            } else {
+                para.style.float = 'left';
+                para.style.backgroundColor = '#111827'
+                para.style.color = 'white'
+            }
+            chat.appendChild(para)
+            chat.scrollTop = chat.scrollHeight;
+        })
+    })
+</script>
+</body>
+</html>
