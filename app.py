@@ -6,7 +6,7 @@ messages = []
 # sio = socketio.Server(logger=True, async_mode=None)
 app = Flask(__name__)
 # app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
-sio = SocketIO(app, manage_session=False)
+sio = SocketIO(app)
 
 @app.route('/')
 def hello_world():  # put application's code here
